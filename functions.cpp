@@ -2,9 +2,11 @@
 #include <random>
 #include <vector>
 
-class Neuron {
-public:
-  float neuron(const std::vector<double>& input) {
+
+
+
+float neuron(const std::vector<double>& input, const std::vector<double>& weights, const double biass) {
+             
     float sum = 0.0f;
 
     std::vector<double> output;
@@ -13,20 +15,27 @@ public:
     std::uniform_real_distribution<> uniform_dist(-0.01, 0.01);
 
     for (int i = 0; i < input.size(); i++) {
-      double weight = uniform_dist(gen);
-      double bias = uniform_dist(gen);
-       sum += input[i] * weight + bias;
+      // double weight = uniform_dist(gen);
+      // double bias = uniform_dist(gen);
+       sum += input[i] * weights[i];
 
     }
-    return sum;
+    return sum += biass;
   }
-};
+
+float ReLU(float x) {
+        if (x > 0) {
+                return x;
+        } else {
+                return 0;
+        }       
+}
 
 int main() {
-    Neuron n;
     std::vector<double> input = {1.0, 2.0, 3.0};
-    float output = n.neuron(input);                    //////////////////// changed output type from vector<double> to float
-
+    std::vector<double> weights = {3.0, -345.0, -33.0};
+    double bias = -5.333333;
+    float output = ReLU(neuron(input, weights, bias  ));            
     std::cout << "Neuron output: " << output << std::endl;
     return 0;
 }
