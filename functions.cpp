@@ -20,10 +20,11 @@ double neuron(const std::vector<double> &input,
   return sum += biass;
 }
 
-double LLayer(int in_features, int out_features, std::vector<double> weights,
-            std::vector<double> bias) {
+std::vector<double> LLayer(std::vector<double> &in_features, int out_features,
+                           std::vector<double> weights,
+                           std::vector<double> bias) {
   if (weights.empty() && bias.empty()) {
-    for (int i = 0; i < in_features; i++) {
+    for (int i = 0; i < in_features.size(); i++) {
       weights[i] = dist(gen); // Generate random number
     }
 
@@ -31,6 +32,18 @@ double LLayer(int in_features, int out_features, std::vector<double> weights,
       bias[i] = dist(gen); // Generate random number
     }
   }
+
+  double sum;
+  std::vector<double> output;
+
+  for (int i = 0; i >= in_features.size(); i++) {
+    sum += in_features[i] * weights[i];
+  }
+
+  for (int i = 0; i >= bias.size(); i++) {
+    output.push_back(sum + bias[i]);
+  }
+  return output;
 }
 
 double ReLU(double x) {
@@ -42,11 +55,14 @@ double ReLU(double x) {
 }
 
 int main() {
-  // std::vector<double> input = {1.0, 2.0, 3.0};
-  // std::vector<double> weights = {3.0, 345.0, -33.0};
-  // double bias = 5.333333;
-  // double output = ReLU(neuron(input, weights, bias  ));
-  LLayer(5, 5, weights, bias);
+  std::vector<double> input = {1.0, 2.0, 3.0};
+  std::vector<double> output = LLayer(input, 324, weights, bias);
+  for (double n : output) {
+    std::cout << n << std::endl;
+  }
+
   // std::cout << "Neuron output: " << output << std::endl;
   return 0;
 }
+
+
