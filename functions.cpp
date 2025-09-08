@@ -7,8 +7,16 @@ std::mt19937 gen(rd()); // Mersenne Twister RNG
 std::uniform_real_distribution<> dist(-0.5,
                                       0.5); // Random float between -0.5 and 0.5
 
-std::vector<double> weights(5);
-std::vector<double> bias(5);
+std::vector<double> weights_and_bias_generator(int lenth) {
+  std::vector<double> numbers;
+  for (int i = 0; i < lenth; i++)
+    numbers.push_back(dist(gen));
+
+  return numbers;
+}
+
+std::vector<double> weights = weights_and_bias_generator(5);
+std::vector<double> bias = weights_and_bias_generator(5);
 
 double neuron(const std::vector<double> &input,
               const std::vector<double> &weights, const double biass) {
@@ -23,26 +31,17 @@ double neuron(const std::vector<double> &input,
 std::vector<double> LLayer(std::vector<double> &in_features, int out_features,
                            std::vector<double> weights,
                            std::vector<double> bias) {
-  if (weights.empty() && bias.empty()) {
-    for (int i = 0; i < in_features.size(); i++) {
-      weights[i] = dist(gen); // Generate random number
-    }
-
-    for (int i = 0; i < out_features; i++) {
-      bias[i] = dist(gen); // Generate random number
-    }
-  }
-
-  double sum;
+  double sum = 0.0;
   std::vector<double> output;
 
-  for (int i = 0; i >= in_features.size(); i++) {
-    sum += in_features[i] * weights[i];
+  for (int i = 0; i < in_features.size(); i++) {
+    sum += in_features[i] + weights[i];
   }
 
-  for (int i = 0; i >= bias.size(); i++) {
-    output.push_back(sum + bias[i]);
+  for (int i = 0; i < out_features; i++) {
+    output.push_back(bias[i] + sum);
   }
+
   return output;
 }
 
@@ -56,7 +55,7 @@ double ReLU(double x) {
 
 int main() {
   std::vector<double> input = {1.0, 2.0, 3.0};
-  std::vector<double> output = LLayer(input, 324, weights, bias);
+  std::vector<double> output = LLayer(input, 33, weights, bias);
   for (double n : output) {
     std::cout << n << std::endl;
   }
@@ -64,5 +63,3 @@ int main() {
   // std::cout << "Neuron output: " << output << std::endl;
   return 0;
 }
-
-
