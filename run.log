@@ -1,0 +1,4 @@
+Epoch 1: loss=0.934349 accuracy=0.813636
+Epoch 2: loss=0.370458 accuracy=0.896018
+Epoch 3: loss=0.283819 accuracy=0.917801
+Test accuracy: 0.917008
