@@ -88,7 +88,10 @@ load_mnist_csv_debug(const std::string &path, bool normalize = true, std::size_t
 
 int main() {
     auto [images, labels] = load_mnist_csv_debug("/home/tahmid/NeuralCpp/data/mnist_test.csv", true);
-    std::cout << "Loaded: " << images.size() << " samples\n";
+    // std::cout << "Loaded: " << images.size() << " samples\n";
+    for (auto n : labels) {
+        std::cout << n << std::endl; 
+    }
     return 0;
 }
 
